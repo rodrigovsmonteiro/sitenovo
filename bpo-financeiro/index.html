@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOB Contábil - BPO Financeiro</title>
+    <!-- Importação de Estilos e Scripts Externos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Estilos para o carrossel de depoimentos */
+        .swiper-container {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card {
+            width: 100%;
+            max-width: 300px;
+            min-height: 150px;
+            max-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #0ea5e9;
+        }
+
+        .swiper-pagination {
+            position: relative;
+            bottom: 0;
+            margin-top: 40px;
+        }
+
+        .swiper-pagination-bullet {
+            background: #0ea5e9;
+        }
+
+        /* Estilo para o modal */
+        #modalForm {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-white via-gray-100 to-gray-200">
+    <!-- Navbar Fixa e Transparente -->
+    <header class="fixed top-0 w-full z-50 bg-white">
+        <nav class="max-w-screen-xl container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center">
+                <a href="/" class="text-2xl font-bold text-black">
+                    <img src="/imgs/logobg.png" alt="Logo" class="h-16">
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8 relative">
+                <!-- Links para as seções da página -->
+                <a href="/" class="text-gray-900 hover:text-sky-600 font-semibold">Início</a>
+
+                <!-- Dropdown Serviços -->
+                <div class="relative group">
+                    <button id="services-button"
+                        class="text-gray-900 hover:text-sky-600 font-semibold flex items-center">
+                        Serviços
+                        <svg id="dropdown-icon" class="ml-2 w-4 h-4 transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="services-dropdown"
+                        class="absolute hidden group-hover:block bg-white shadow-lg mt-0 rounded-md py-2"
+                        style="min-width: 200px;">
+                        <a href="/abertura-de-empresa/"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Abertura de
+                            Empresa</a>
+                        <a href="/bpo-financeiro/"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">BPO
+                            Financeiro</a>
+                        <a href="#consultoria-tributaria"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Consultoria
+                            Tributária</a>
+                        <a href="#contabilidade-completa"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Contabilidade
+                            Completa</a>
+                    </div>
+                </div>
+
+                <a href="#sobre" class="text-gray-900 hover:text-sky-600 font-semibold">Sobre</a>
+                <a href="#blog" class="text-gray-900 hover:text-sky-600 font-semibold">Blog</a>
+                <a href="#contato" class="text-gray-900 hover:text-sky-600 font-semibold">Contato</a>
+            </div>
+            <div class="hidden md:block">
+                <a href="#" onclick="openModal()"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300 mr-4">
+                    Contratar BPO Financeiro
+                </a>
+            </div>
+            <button class="block md:hidden focus:outline-none" id="menu-button">
+                <svg class="w-6 h-6 text-black hover:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+        <div class="hidden md:hidden bg-white bg-opacity-75" id="menu">
+            <a href="#home" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Início</a>
+            <a href="#services" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Serviços</a>
+            <a href="#sobre" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Sobre</a>
+            <a href="#blog" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Blog</a>
+            <a href="#contato" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Contato</a>
+            <a href="#" onclick="openModal()"
+                class="block bg-sky-600 text-white text-center px-4 py-2 rounded-md shadow hover:bg-sky-700">Contratar
+                BPO Financeiro</a>
+        </div>
+    </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const servicesButton = document.getElementById('services-button');
+            const dropdownIcon = document.getElementById('dropdown-icon');
+            const servicesDropdown = document.getElementById('services-dropdown');
+
+            servicesButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                servicesDropdown.classList.toggle('hidden');
+                dropdownIcon.classList.toggle('rotate-180');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!servicesButton.contains(e.target) && !servicesDropdown.contains(e.target)) {
+                    servicesDropdown.classList.add('hidden');
+                    dropdownIcon.classList.remove('rotate-180');
+                }
+            });
+        });
+    </script>
+
+    <div class="h-fit sm:h-fit md:h-fit lg:h-fit xl:h-screen bg-gradient-to-b from-white via-gray-100 to-gray-200">
+        <!-- Seção Home -->
+        <section id="home" class="reveal pt-32 md:pt-48 max-w-screen-xl px-4 mb-8 mx-auto">
+            <h1 class="text-sky-600 text-4xl font-bold mb-8 px-4">
+                Nosso Serviço de BPO Financeiro
+            </h1>
+            <div class="flex flex-col text-black px-4">
+                <p class="text-lg md:text-xl mb-8">
+                    Na <span class="font-semibold">AOB Contábil</span>, oferecemos um serviço completo de BPO Financeiro
+                    que
+                    ajuda sua empresa a gerir suas finanças de forma eficiente e segura. Desde a administração de contas
+                    a pagar e receber até o controle financeiro detalhado, cuidamos de tudo para que você possa focar no
+                    crescimento do seu negócio.</p>
+                <div class="flex justify-start lg:flex">
+                    <a href="#" onclick="openModal()"
+                        class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-20 rounded-md shadow-lg transition duration-300">
+                        Contratar BPO Financeiro
+                    </a>
+                </div>
+                <div class="hidden lg:hidden justify-start">
+                    <a href="#" onclick="openModal()"
+                        class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-6 rounded-md shadow-lg transition duration-300 max-w-xs">
+                        Contratar BPO Financeiro
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Cards -->
+        <section id="services" class="reveal-scale max-w-screen-xl px-6 py-12 mt-4 xl:mt-0 mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <!-- Card 1: Benefícios do BPO Financeiro -->
+                <div
+                    class="bg-white rounded-lg shadow p-6 flex flex-col transition duration-300 transform hover:scale-105">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Benefícios do BPO Financeiro</h2>
+                    <ul class="list-decimal pl-5 text-gray-600 text-lg">
+                        <li class="mb-4">Redução de custos operacionais</li>
+                        <li class="mb-4">Melhoria na eficiência dos processos financeiros</li>
+                        <li class="mb-4">Acesso a relatórios financeiros detalhados</li>
+                        <li class="mb-4">Foco no core business da empresa</li>
+                    </ul>
+                </div>
+                <!-- Card 2: Nosso Processo de BPO Financeiro -->
+                <div
+                    class="bg-white rounded-lg shadow p-6 flex flex-col transition duration-300 transform hover:scale-105">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Nosso Processo de BPO Financeiro</h2>
+                    <ol class="list-decimal pl-5 text-gray-600 text-lg">
+                        <li class="mb-4">Avaliação das necessidades financeiras da empresa</li>
+                        <li class="mb-4">Implementação de soluções personalizadas</li>
+                        <li class="mb-4">Gestão completa de contas a pagar e receber</li>
+                        <li class="mb-4">Elaboração de relatórios financeiros periódicos</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ModalBPO -->
+    <div id="modalForm" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
+            <h2 class="text-2xl font-bold mb-4">Solicitação de Serviço de BPO Financeiro</h2>
+            <!-- Formulário de BPO Financeiro -->
+            <form name="BPO Financeiro" id="BPO Financeiro" class="space-y-4" onsubmit="validateForm(event)">
+                <div>
+                    <label for="firstname" class="block text-gray-700">Nome*</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="Seu Nome *"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500"
+                        required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-700">WhatsApp*</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Seu WhatsApp *"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500"
+                        required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700">Email*</label>
+                    <input type="email" id="email" name="email" placeholder="Seu Email *"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500"
+                        required>
+                </div>
+                <div>
+                    <label for="company" class="block text-gray-700">Nome da Empresa</label>
+                    <input type="text" id="company" name="company" placeholder="Nome da sua empresa"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="comunicacoes" name="comunicacoes" class="mr-2" required>
+                    <label for="comunicacoes" class="text-gray-700">Eu concordo em receber comunicações.</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit"
+                        class=" bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-24 rounded-md shadow-lg transition duration-300">
+                        Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function openModal() {
+            document.getElementById('modalForm').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modalForm').style.display = 'none';
+        }
+
+        // Fechar o modal quando clicar fora do conteúdo
+        window.onclick = function (event) {
+            const modal = document.getElementById('modalForm');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        function validateForm(event) {
+            event.preventDefault(); // Impede o envio do formulário se houver erros
+
+            const form = document.getElementById('BPO Financeiro');
+            const nome = form['firstname'].value.trim();
+            const whatsapp = form['phone'].value.trim();
+            const email = form['email'].value.trim();
+            const comunicacoes = form['comunicacoes'].checked;
+
+            if (!nome || !whatsapp || !email || !comunicacoes) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            // Verifica se o WhatsApp é um número válido
+            const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+            if (!phoneRegex.test(whatsapp)) {
+                alert('Por favor, insira um número de WhatsApp válido.');
+                return;
+            }
+
+            // Verifica se o email é válido
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor, insira um email válido.');
+                return;
+            }
+
+            // Se passar por todas as validações, envia o formulário
+            form.submit();
+        }
+
+        // Adiciona máscara de entrada ao campo de telefone
+        $(document).ready(function () {
+            $('#phone').inputmask('(99) 99999-9999');
+        });
+    </script>
+
+
+
+    <!-- Seção de Depoimentos com Carrossel -->
+    <section id="testimonials" class="bg-gray-100 py-8 shadow-lg rounded-lg">
+        <div class="reveal-scale mx-auto px-4 py-8">
+            <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Depoimentos sobre nosso Serviço de BPO
+                Financeiro
+            </h2>
+            <div class="swiper testimonialSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Depoimento 1 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"A AOB Contábil transformou nossa gestão financeira com seu
+                                serviço de BPO Financeiro. Agora temos controle total e relatórios precisos."</p>
+                            <p class="font-semibold text-gray-800">- João Silva</p>
+                        </div>
+                    </div>
+                    <!-- Depoimento 2 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"Estamos extremamente satisfeitos com o BPO Financeiro da AOB
+                                Contábil. Economizamos tempo e dinheiro com processos mais eficientes."</p>
+                            <p class="font-semibold text-gray-800">- Maria Oliveira</p>
+                        </div>
+                    </div>
+                    <!-- Depoimento 3 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"O BPO Financeiro da AOB Contábil nos proporcionou uma visão
+                                clara
+                                e estratégica das nossas finanças. Recomendo!"</p>
+                            <p class="font-semibold text-gray-800">- Pedro Santos</p>
+                        </div>
+                    </div>
+                    <!-- Novo Depoimento (Depoimento 4) -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"A AOB Contábil foi essencial para nossa empresa com seu
+                                serviço
+                                de BPO Financeiro. Eles são parceiros indispensáveis."</p>
+                            <p class="font-semibold text-gray-800">- Lucas Almeida</p>
+                        </div>
+                    </div>
+                    <!-- Mais depoimentos sobre BPO Financeiro -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"O serviço de BPO Financeiro da AOB Contábil superou nossas
+                                expectativas. Eles trouxeram soluções eficazes e inteligentes para nossa empresa."</p>
+                            <p class="font-semibold text-gray-800">- Ana Costa</p>
+                        </div>
+                    </div>
+                    <!-- Adicione mais depoimentos aqui, se necessário -->
+                </div>
+                <!-- Adicionando paginador -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        var testimonialSwiper = new Swiper('.testimonialSwiper', {
+            slidesPerView: 1, // Quantidade de slides visíveis por vez
+            spaceBetween: 20, // Espaço entre os slides
+            loop: true, // Loop infinito
+            autoplay: {
+                delay: 3000, // Delay entre cada rolagem automática em milissegundos (3 segundos neste exemplo)
+                disableOnInteraction: false, // Não pausa o autoplay quando o usuário interage com o slider
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+            }
+        });
+        // Seleciona todos os slides
+        const slides = document.querySelectorAll('.swiper-slide');
+
+        slides.forEach(slide => {
+            slide.addEventListener('mouseenter', () => {
+                testimonialSwiper.autoplay.stop();
+            });
+
+            slide.addEventListener('mouseleave', () => {
+                testimonialSwiper.autoplay.start();
+            });
+        });
+    </script>
+
+    <section class="bg-white py-12">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Perguntas Frequentes</h2>
+            <div class="space-y-8">
+                <!-- Pergunta 1 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-gray-800 question cursor-pointer">O que é BPO Financeiro?</h3>
+                    <p class="text-gray-600 mt-2 answer hidden">BPO Financeiro é um serviço oferecido pela AOB Contábil
+                        para terceirização de processos financeiros, incluindo gestão de
+                        contas a pagar, receber e relatórios detalhados, permitindo que sua empresa foque no seu core
+                        business.</p>
+                </div>
+                <!-- Pergunta 2 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-gray-800 question cursor-pointer">Quais empresas podem se
+                        beneficiar do BPO Financeiro da AOB Contábil?</h3>
+                    <p class="text-gray-600 mt-2 answer hidden">Empresas de diversos setores que buscam otimizar suas
+                        operações financeiras e obter uma visão estratégica de suas
+                        finanças podem se beneficiar significativamente do nosso serviço de BPO Financeiro.</p>
+                </div>
+                <!-- Pergunta 3 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-gray-800 question cursor-pointer">Como posso contratar o
+                        serviço de BPO Financeiro da AOB Contábil?</h3>
+                    <p class="text-gray-600 mt-2 answer hidden">Entre em contato conosco através do nosso formulário
+                        online ou do telefone para uma consulta inicial. Estamos prontos
+                        para personalizar uma solução que atenda às suas necessidades específicas.</p>
+                </div>
+                <!-- Adicione mais perguntas conforme necessário -->
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const questions = document.querySelectorAll('.question');
+            const answers = document.querySelectorAll('.answer');
+
+            questions.forEach((question, index) => {
+                question.addEventListener('click', () => {
+                    answers.forEach((answer, i) => {
+                        if (i !== index) {
+                            answer.classList.add('hidden');
+                        }
+                    });
+                    const answer = question.nextElementSibling;
+                    answer.classList.toggle('hidden');
+                });
+            });
+        });
+    </script>
+
+    <section class="bg-gray-100 py-12">
+        <div class="max-w-screen-xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-sky-600 mb-8">Pronto para Melhorar sua Gestão Financeira?</h2>
+            <p class="text-lg text-gray-600 mb-8">Entre em contato conosco hoje mesmo para descobrir como nosso serviço
+                de BPO Financeiro pode ajudar a otimizar suas operações financeiras.</p>
+            <a href="#" onclick="openModal()"
+                class=" bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-24 rounded-md shadow-lg transition duration-300">
+                Saiba Mais</a>
+        </div>
+    </section>
+
+
+    <hr>
+
+    <!-- Navbar -->
+    <footer id="navbarfooter" class="fixed bottom-0 w-full bg-white border-t border-gray-200 py-4 px-4 hidden z-50">
+        <nav
+            class="container mx-auto flex flex-col sm:flex-row justify-center sm:justify-center items-center text-center sm:text-left">
+            <!-- Bloco 1 -->
+            <div class="flex flex-col sm:flex-row items-center mb-4 sm:mb-0 sm:mr-4">
+                <p class="text-black mb-2 sm:mb-0 sm:mr-3"><span class="font-semibold">Dúvidas?</span>
+                </p>
+                <a href="https://api.whatsapp.com/send?phone=551123394043" target="_blank"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300">
+                    Entre em contato
+                </a>
+            </div>
+            <!-- Bloco 2 -->
+            <div class="hidden lg:flex flex-col sm:flex-row items-center">
+                <p class="text-black mb-2 sm:mb-0 sm:mr-3">Ou se preferir</p>
+                <a href="#" target="_blank"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300">
+                    Ligamos para você
+                </a>
+            </div>
+        </nav>
+    </footer>
+    <!-- JavaScript para mostrar o navbar após a seção client -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.getElementById('navbarfooter');
+            const homeSection = document.getElementById('testimonials');
+            const footer = document.getElementById('footer');
+            const homeSectionHeight = homeSection.offsetTop + homeSection.offsetHeight;
+            const footerTop = footer.offsetTop;
+
+            function checkScroll() {
+                const scrolled = window.scrollY + window.innerHeight;
+                if (scrolled > homeSectionHeight || scrolled > footerTop) {
+                    navbar.classList.remove('hidden');
+                } else {
+                    navbar.classList.add('hidden');
+                }
+            }
+            window.addEventListener('scroll', checkScroll);
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer id="footer"
+        class="relative sm:mb-12 mb-24 text-sky-600 py-8  bg-gradient-to-b from-white via-gray-100 to-gray-200">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div
+                class="reveal relative container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-start md:items-start  gap-10 px-4 z-10">
+                <!-- Logo e Informações da Empresa -->
+                <div class="">
+                    <a href="#" class="text-2xl font-bold">
+                        <img src="/abertura-de-empresa/logobg.png" alt="Logo da AOB Contábil"
+                            class="w-64 md:-mt-4 md:-ml-6 mx-auto">
+                    </a>
+                    <h3 class="text-xl font-semibold mt-2 mb-2 text-sky-600">AOB Contabilidade</h3>
+                    <p class="mb-2 text-black">CNPJ: 25.344.574/0001-08</p>
+                    <p class="mb-2 text-black">Marca registrada | Processo nº: 910926310/2018</p>
+                </div>
+                <!-- Contato -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600">Contato</h4>
+                    <p class="text-black">Rua Barão do Triunfo - 427 - Conjunto 1301, Brooklin,
+                        <br> São Paulo - SP, 04602-001
+                    </p>
+                    <p class="text-black">(11) 2339-4043<i class="fab fa-whatsapp text-lg ml-1 text-green-600"></i></p>
+                    <p class="text-black">contato@aobcontabil.com.br</p>
+                </div>
+                <!-- Links Rápidos -->
+                <div class="">
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600 mt-0  lg:mt-0">Links Rápidos</h4>
+                    <ul class="text-black ">
+                        <li class="mb-2 hover:text-sky-600"><a href="#home">Início</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#services">Serviços</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#sobre">Sobre</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="/blog">Blog</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <!-- Redes Sociais -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600">Redes Sociais</h4>
+                    <ul class="text-black">
+                        <li>
+                            <a href="https://www.instagram.com/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram text-2xl mr-2 text-red-900"></i>
+                                Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-facebook text-2xl mr-2 text-blue-900"></i>
+                                Facebook
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://www.youtube.com.br/@aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-youtube text-2xl -ml-0 mr-2 text-red-500"></i>
+                                Youtube
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/company/aob-contabilidade"
+                                class="flex mb-2 hover:text-sky-600" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-linkedin text-2xl mr-2  text-gray-900"></i>
+                                LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.x.com.br/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-x-twitter text-2xl -ml-0 mr-2 text-black"></i>
+                                Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- FontAwesome para os ícones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+
+    <!--// Mostrar e ocultar menu no mobile-->
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function () {
+            var menu = document.getElementById('menu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

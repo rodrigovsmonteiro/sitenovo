@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação WhatsApp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Estilos adicionais */
+        .chat-window {
+            width: 100%;
+            max-width: 500px;
+            height: 600px;
+            /* Ajuste da altura */
+            background-color: #e5ddd5;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .message-container {
+            height: 80%;
+            /* Ajuste da altura para expandir a área de mensagens */
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            /* Reversão da ordem das mensagens */
+        }
+
+        .message {
+            padding: 8px;
+            border-radius: 8px;
+            max-width: 70%;
+            margin-bottom: 8px;
+        }
+
+        .sender {
+            background-color: #B2EBF2;
+            /* Azul claro */
+            align-self: flex-start;
+            /* Ajuste para o texto ficar à esquerda */
+            text-align: left;
+        }
+
+        .receiver {
+            background-color: #E5E5EA;
+            align-self: flex-end;
+            /* Ajuste para o texto ficar à direita */
+            text-align: right;
+        }
+
+        .option-button {
+            cursor: pointer;
+            color: #3182CE;
+            font-weight: bold;
+            border: none;
+            background: none;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding-left: 20px;
+            margin: 0px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .send-icon {
+            position: absolute;
+            right: 20px;
+            cursor: pointer;
+            color: #0369A1;
+            /* sky-800 */
+            font-size: 1.5rem;
+        }
+
+        body {
+            background-color: #fff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-header {
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 8px 8px 0 0;
+            justify-content: flex-start;
+            /* Adicionado para alinhar à esquerda */
+        }
+
+        .status {
+            margin-left: 10px;
+            /* Adicionado para separar o status do nome */
+        }
+
+        .chat-header img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-header div {
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header span {
+            display: block;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body class="bg-white flex h-screen m-0">
+    <div class="chat-window bg-gray-100 rounded-lg shadow-md flex flex-col justify-between">
+        <div class="chat-header bg-sky-600 text-white p-4 flex justify-between items-center rounded-t-lg">
+            <div class="flex"> <!-- Alterado aqui -->
+                <img src="/imgs/robo.png" class="h-10 w-10 rounded-full" alt="Profile">
+                <div class="flex flex-col justify-start items-start ml-2">
+                    <strong>Chat - Assistente da AOB Contábil</strong>
+                    <span class="text-xs ml-2">Online</span>
+                </div>
+            </div>
+            <div class="flex">
+                <i class="fas fa-video text-white"></i>
+                <i class="fas fa-phone text-white ml-4"></i>
+            </div>
+        </div>
+        <div class="message-container">
+            <!-- Mensagens serão adicionadas aqui -->
+        </div>
+        <div class="input-container relative bg-white p-2 shadow-md">
+            <input id="inputMessage" type="text" placeholder="Digite aqui..."
+                class="w-full border-none focus:ring-0 focus:outline-none p-2">
+            <i class="fas fa-paper-plane send-icon text-sky-600 hover:text-sky-700 cursor-pointer absolute top-1/2 right-4 transform -translate-y-1/2"
+                onclick="sendMessage()"></i>
+        </div>
+    </div>
+
+    <script>
+        const messages = document.querySelector('.message-container');
+        let step = 1;
+        let name = '';
+        let phone = '';
+        let contactPreference = '';
+
+        function getGreeting() {
+            const now = new Date();
+            const hours = now.getHours();
+            let greeting;
+
+            if (hours >= 6 && hours < 12) {
+                greeting = "Bom dia";
+            } else if (hours >= 12 && hours < 18) {
+                greeting = "Boa tarde";
+            } else {
+                greeting = "Boa noite";
+            }
+
+            return greeting;
+        }
+
+        function addMessage(text, sender = true) {
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = text;
+            messageElement.classList.add('message', sender ? 'sender' : 'receiver');
+            messages.appendChild(messageElement);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const inputMessage = document.getElementById('inputMessage');
+            const messageText = inputMessage.value.trim();
+            if (messageText === '') return;
+
+            addMessage(messageText, false);
+
+            if (step === 1) {
+                if (!validateName(messageText)) {
+                    setTimeout(() => {
+                        addMessage(`Desculpe, parece que o nome que você inseriu não é válido. Por favor, digite um nome válido.`);
+                    }, 1000);
+                    return;
+                }
+                name = messageText;
+                step++;
+                setTimeout(() => {
+                    addMessage(`Olá, ${name}. Qual é o seu telefone?`);
+                }, 1000);
+            } else if (step === 2) {
+                if (!validatePhone(messageText)) {
+                    setTimeout(() => {
+                        addMessage(`Telefone inválido. Por favor, insira um número de telefone válido com DDD, como por exemplo: (11) 98765-4321.`);
+                    }, 1000);
+                    return;
+                }
+                phone = messageText;
+                step++;
+                setTimeout(() => {
+                    addMessage(`Obrigado, ${name}. Como prefere que entremos em contato?`);
+                    addMessage(`<button class="option-button" onclick="chooseContact('mensagem', this)">Mensagem</button>`);
+                    addMessage(`<button class="option-button" onclick="chooseContact('ligacao', this)">Ligação</button>`);
+                }, 1000);
+            } else if (step === 3) {
+                contactPreference = messageText.toLowerCase();
+                step++;
+                setTimeout(() => {
+                    addMessage(`Ótimo! Qual será o ramo de atividade da empresa?<br><br><span class="text-sm">Algumas sugestões: Consultoria, Comércio, Serviços, Tecnologia, Alimentação, Outro</span>`);
+                }, 1000);
+            } else if (step === 4) {
+                step++;
+                setTimeout(() => {
+                    addMessage(`E você já possui um local para instalar a empresa?`);
+                }, 1000);
+            } else {
+                addMessage(`Obrigado, ${name}. Entraremos em contato em breve para continuar o processo.`);
+                inputMessage.disabled = true;
+            }
+
+            inputMessage.value = '';
+        }
+
+        function chooseContact(option, button) {
+            const inputMessage = document.getElementById('inputMessage');
+            inputMessage.value = option;
+            sendMessage();
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach(btn => btn.disabled = true); // Desativa todos os botões com a classe .option-button
+        }
+
+        function validateName(name) {
+            const nameRegex = /^[a-zA-ZÀ-ÿ\s]+$/;
+            return nameRegex.test(name) && name.trim().length >= 3;
+        }
+
+        function validatePhone(phone) {
+            const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
+            return phoneRegex.test(phone);
+        }
+
+
+        document.getElementById("inputMessage").addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        window.onload = () => {
+            const greeting = getGreeting();
+            addMessage(`${greeting}! Qual é o seu nome?`);
+        }
+    </script>
+</body>
+
+</html>

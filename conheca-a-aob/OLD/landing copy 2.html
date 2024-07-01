@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOB Contábil - Captura de Leads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <section id="home" class="w-full min-h-screen flex flex-col items-center justify-center bg-white px-4 py-0 ">
+        <!-- Contêiner principal -->
+        <div id="formulario">
+            <!-- Logo -->
+            <div class="flex justify-center mb-0">
+                <img src="logohome.png" alt="Logo da AOB Contábil" class="w-36 h-36 object-contain">
+            </div>
+
+            <!-- Título -->
+            <h1 class="text-3xl font-bold text-center text-gray-900 mb-4">Fale com a AOB Contábil</h1>
+
+            <!-- Descrição curta -->
+            <p class="text-center text-gray-900 mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                nec odio. Praesent libero.</p>
+
+            <!-- Formulário -->
+            <form class="space-y-4">
+                <div>
+                    <label for="nome" class="block text-gray-700">Nome*</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome *"
+                        class="w-full p-4 border border-gray-300 rounded" required>
+                </div>
+                <div>
+                    <label for="celular" class="block text-gray-700">Celular*</label>
+                    <div class="flex">
+                        <input type="tel" id="celular" name="celular" placeholder="Celular *"
+                            class="flex-1 p-4 border border-gray-300 rounded" required>
+                    </div>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700">Email*</label>
+                    <input type="email" id="email" name="email" placeholder="Email *"
+                        class="w-full p-4 border border-gray-300 rounded" required>
+                </div>
+                <div>
+                    <label for="servico" class="block text-gray-700">Qual serviço deseja?*</label>
+                    <select id="servico" name="servico" class="w-full p-4 border border-gray-300 rounded" required>
+                        <option value="Abrir uma empresa">Abrir uma empresa</option>
+                        <option value="Regularizar minha empresa">Regularizar minha empresa</option>
+                        <option value="Regularizar minha empresa">Imposto de Renda</option>
+                        <option value="Já tenho uma empresa">Outros serviços</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="checkbox" id="comunicacoes" name="comunicacoes" class="mr-2" required>
+                    <label for="comunicacoes" class="text-gray-700">Eu concordo em receber comunicações.</label>
+                </div>
+                <div>
+                    <label for="politica" class="text-gray-700">Ao informar meus dados, eu concordo com a
+                        <a class="underline" href="URL_DA_POLITICA_DE_PRIVACIDADE">Política de Privacidade</a>
+                        e com os
+                        <a class="underline" href="URL_DOS_TERMOS_DE_USO">Termos de Uso</a>.
+                    </label>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-sky-700 text-white py-4 rounded hover:bg-sky-800 transition-colors">Quero saber
+                    mais!</button>
+            </form>
+            <p class="text-gray-700 text-sm mt-2 text-center">Pode ficar tranquilo. Seus dados estão protegidos com a
+                gente!</p>
+        </div>
+    </section>
+
+
+
+    <section id="servicos"
+        class="w-full min-h-screen flex flex-col items-center justify-center bg-sky-500 px-4 py-0 bg-gradient-to-b from-sky-700 to-sky-900">
+        <!-- Seção de Serviços -->
+        <div class="">
+            <h2 class="text-3xl font-bold text-center text-white mb-8">O que fazemos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <div class="bg-white rounded-lg p-4 flex items-center">
+                    <svg class="w-6 h-6 text-green-500 mr-4">
+                        <path
+                            d="M19 3h-3V1h-2v2H10V1H8v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V8h14z">
+                        </path>
+                    </svg>
+                    <p class="text-gray-900 font-semibold">Abertura, Alterações e Encerramento de empresas</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 flex items-center">
+                    <svg class="w-6 h-6 text-green-500 mr-4">
+                        <path
+                            d="M19 3h-3V1h-2v2H10V1H8v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V8h14z">
+                        </path>
+                    </svg>
+                    <p class="text-gray-900 font-semibold">Assessoria Contábil e Fiscal</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 flex items-center">
+
+                    <svg class="w-6 h-6 text-green-500 mr-4">
+                        <path
+                            d="M19 3h-3V1h-2v2H10V1H8v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V8h14z">
+                        </path>
+                    </svg>
+                    <p class="text-gray-900 font-semibold">Consultoria e Planejamento Tributário</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 flex items-center">
+                    <svg class="w-6 h-6 text-green-500 mr-4">
+                        <path
+                            d="M19 3h-3V1h-2v2H10V1H8v2H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H5V8h14z">
+                        </path>
+                    </svg>
+                    <p class="text-gray-900 font-semibold">Rotinas trabalhistas como Admissões, Rescisões, folha de
+                        pagamento e outros</p>
+                </div>
+                <!-- Botão para levar ao formulário -->
+                <div class="flex justify-center text-center mt-8">
+                    <a href="#formulario"
+                        class="w-full bg-sky-700 text-white py-4 rounded hover:bg-sky-800 transition-colors">
+                        Quero saber mais!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre-aob" class="w-full flex flex-col items-center justify-center bg-white p-4 py-8">
+        <!-- Seção sobre AOB Contábil -->
+        <div class="w-full max-w-4xl">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Sobre a AOB Contábil</h2>
+            <div class="text-gray-700">
+                <p>A AOB Contábil oferece soluções contábeis, fiscais, trabalhistas e societárias para empresas. Com uma
+                    equipe qualificada e tecnologia avançada, garantimos o cumprimento de obrigações legais e
+                    contribuímos
+                    para o sucesso de nossos clientes.</p>
+                <p>Proporcionamos tranquilidade e segurança para que sua empresa cresça e prospere. Conte conosco para
+                    as
+                    melhores soluções contábeis!</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="text-center">© 2024 AOB Contábil. Todos os direitos reservados.</div>
+    </footer>
+
+
+</body>
+
+</html>

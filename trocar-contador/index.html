@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOB Contábil - Trocar de Contador</title>
+    <!-- Importação de Estilos e Scripts Externos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+    <style>
+        /* Estilos para o carrossel de depoimentos */
+        .swiper-container {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+
+        .swiper-wrapper {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: auto;
+        }
+
+        .testimonial-card {
+            width: 100%;
+            max-width: 300px;
+            min-height: 150px;
+            max-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #0ea5e9;
+        }
+
+        .swiper-pagination {
+            position: relative;
+            bottom: 0;
+            margin-top: 40px;
+        }
+
+        .swiper-pagination-bullet {
+            background: #0ea5e9;
+        }
+
+        /* Estilo para o modal */
+        #modalForm {
+            display: none;
+        }
+
+        .group:hover .group-hover\:block,
+        .group:focus-within .group-hover\:block {
+            display: block;
+        }
+
+        .relative:hover .absolute,
+        .relative:focus-within .absolute {
+            display: block;
+        }
+
+        .absolute {
+            display: none;
+        }
+
+        #dropdown-icon {
+            transition: transform 0.3s;
+        }
+
+        #services-dropdown {
+            display: none;
+        }
+
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
+        .group:hover #services-dropdown,
+        .group:focus-within #services-dropdown {
+            display: block;
+        }
+
+        .group:hover #dropdown-icon,
+        .group:focus-within #dropdown-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body class="">
+    <!-- Navbar Fixa e Transparente -->
+    <header class="fixed top-0 w-full z-50 bg-white ">
+        <nav class="max-w-screen-xl container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center">
+                <a href="/" class="text-2xl font-bold text-black">
+                    <img src="/imgs/logobg.png" alt="Logo" class="h-16">
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8 relative">
+                <!-- Links para as seções da página -->
+                <a href="/" class="text-gray-900 hover:text-sky-600 font-semibold">Início</a>
+                <div class="relative group">
+                    <button id="services-button"
+                        class="text-gray-900 hover:text-sky-600 font-semibold flex items-center">
+                        Serviços
+                        <svg id="dropdown-icon" class="ml-2 w-4 h-4 transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="services-dropdown"
+                        class="absolute hidden group-hover:block bg-white shadow-lg mt-0 rounded-md py-2"
+                        style="min-width: 200px;">
+                        <a href="/abertura-de-empresa/"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Abertura de
+                            Empresa</a>
+                        <a href="/bpo-financeiro/"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">BPO
+                            Financeiro</a>
+                        <a href="/consultoria-tributaria/"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Consultoria
+                            Tributária</a>
+                        <a href="/trocar-contador/"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Trocar de
+                            Contador</a>
+                    </div>
+                </div>
+                <a href="#sobre" class="text-gray-900 hover:text-sky-600 font-semibold">Sobre</a>
+                <a href="#blog" class="text-gray-900 hover:text-sky-600 font-semibold">Blog</a>
+                <a href="#contato" class="text-gray-900 hover:text-sky-600 font-semibold">Contato</a>
+            </div>
+            <div class="hidden md:block">
+                <a href="#" onclick="openModal()"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300 mr-4">
+                    Trocar de Contador
+                </a>
+            </div>
+            <button class="block md:hidden focus:outline-none" id="menu-button">
+                <svg class="w-6 h-6 text-black hover:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+        <div class="hidden md:hidden bg-white bg-opacity-75" id="menu">
+            <a href="#home" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Início</a>
+            <a href="#services" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Serviços</a>
+            <a href="#sobre" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Sobre</a>
+            <a href="#blog" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Blog</a>
+            <a href="#contato" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Contato</a>
+            <a href="#" onclick="openModal()"
+                class="block bg-sky-600 text-white text-center px-4 py-2 rounded-md shadow hover:bg-sky-700">Contratar
+                Contabilidade</a>
+        </div>
+    </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const servicesButton = document.getElementById('services-button');
+            const dropdownIcon = document.getElementById('dropdown-icon');
+            const servicesDropdown = document.getElementById('services-dropdown');
+
+            servicesButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                servicesDropdown.classList.toggle('hidden');
+                dropdownIcon.classList.toggle('rotate-180');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!servicesButton.contains(e.target) && !servicesDropdown.contains(e.target)) {
+                    servicesDropdown.classList.add('hidden');
+                    dropdownIcon.classList.remove('rotate-180');
+                }
+            });
+        });
+
+        document.getElementById('menu-button').addEventListener('click', function () {
+            var menu = document.getElementById('menu');
+            menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+        });
+    </script>
+
+    <div class="h-fit sm:h-fit md:h-fit lg:h-fit xl:h-screen bg-gradient-to-b from-white via-gray-100 to-gray-200">
+        <!-- Seção Home -->
+        <section id="home" class="reveal pt-32 md:pt-48 max-w-screen-xl px-4 mb-8 mx-auto">
+            <h1 class="text-sky-600 text-4xl font-bold mb-8 px-4">Troque de Contador com a AOB Contábil</h1>
+            <div class="flex flex-col text-black px-4">
+                <p class="text-lg md:text-xl mb-8">
+                    Na <span class="font-semibold">AOB Contábil</span>, facilitamos a troca de contador para garantir
+                    que sua empresa receba o melhor atendimento contábil. Nossa equipe está pronta para auxiliar você em
+                    cada passo do processo, garantindo uma transição tranquila e eficiente.
+                </p>
+                <div class="flex justify-start lg:flex">
+                    <a href="#" onclick="openModal()"
+                        class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-20 rounded-md shadow-lg transition duration-300">
+                        Trocar de Contador
+                    </a>
+                </div>
+                <div class="hidden lg:hidden justify-start">
+                    <a href="#" onclick="openModal()"
+                        class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-6 rounded-md shadow-lg transition duration-300 max-w-xs">
+                        Trocar de Contador
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Como Funciona -->
+        <section id="how-it-works" class="reveal py-20 px-4 mb-8 mx-auto">
+            <div class="max-w-screen-xl mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Como Funciona</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fas fa-file-alt text-5xl text-sky-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">1. Avaliação</h3>
+                        <p class="text-gray-600">Analisamos a situação contábil atual da sua empresa para entender suas
+                            necessidades.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fas fa-exchange-alt text-5xl text-sky-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">2. Transição</h3>
+                        <p class="text-gray-600">Cuidamos de toda a documentação e procedimentos para a troca de
+                            contador.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <i class="fas fa-handshake text-5xl text-sky-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">3. Integração</h3>
+                        <p class="text-gray-600">Integramos os novos processos contábeis e fornecemos suporte contínuo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Seção de Benefícios -->
+    <section id="benefits" class="bg-white py-12">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Benefícios de Trocar de Contador com a AOB
+                Contábil</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center">
+                    <i class="fas fa-check-circle text-5xl text-sky-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Transição Sem Complicações</h3>
+                    <p class="text-gray-600">Cuidamos de todo o processo de troca de contador, garantindo que não
+                        haja interrupções nos seus serviços contábeis.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center">
+                    <i class="fas fa-user-check text-5xl text-sky-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Atendimento Personalizado</h3>
+                    <p class="text-gray-600">Nossa equipe oferece um atendimento personalizado para entender e
+                        atender às suas necessidades específicas.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center">
+                    <i class="fas fa-chart-line text-5xl text-sky-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Melhoria na Gestão Contábil</h3>
+                    <p class="text-gray-600">Oferecemos soluções contábeis que ajudam a melhorar a gestão financeira
+                        da sua empresa.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center">
+                    <i class="fas fa-lightbulb text-5xl text-sky-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Consultoria Especializada</h3>
+                    <p class="text-gray-600">Nossa equipe de especialistas está pronta para fornecer consultoria em
+                        diversas áreas contábeis e fiscais.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center">
+                    <i class="fas fa-shield-alt text-5xl text-sky-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Segurança e Confidencialidade</h3>
+                    <p class="text-gray-600">Garantimos a segurança e a confidencialidade das informações
+                        financeiras da sua empresa.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow flex flex-col items-center text-center">
+                    <i class="fas fa-clock text-5xl text-sky-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Economia de Tempo</h3>
+                    <p class="text-gray-600">Deixe a parte contábil com a gente e foque no crescimento do seu
+                        negócio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de FAQ -->
+    <section class="bg-white py-12">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Perguntas Frequentes</h2>
+            <div class="space-y-8">
+                <!-- Pergunta 1 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-gray-800 question cursor-pointer">Como funciona a troca de
+                        contador?</h3>
+                    <p class="text-gray-600 mt-2 answer hidden">A troca de contador com a AOB Contábil é um processo
+                        simples e eficiente. Nós cuidamos de toda a documentação necessária e garantimos uma
+                        transição tranquila.</p>
+                </div>
+                <!-- Pergunta 2 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-gray-800 question cursor-pointer">Quais são os benefícios
+                        de trocar de contador?</h3>
+                    <p class="text-gray-600 mt-2 answer hidden">Trocar de contador pode trazer diversos benefícios,
+                        como atendimento personalizado, melhoria na gestão contábil e consultoria especializada.</p>
+                </div>
+                <!-- Pergunta 3 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-gray-800 question cursor-pointer">Quanto tempo leva para
+                        trocar de contador?</h3>
+                    <p class="text-gray-600 mt-2 answer hidden">O processo de troca de contador pode variar, mas a
+                        AOB Contábil se esforça para garantir que seja o mais rápido e eficiente possível.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Troca de Contador -->
+    <div id="modalForm" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
+            <h2 class="text-2xl font-bold mb-4">Solicitação de Troca de Contador</h2>
+            <!-- Formulário de Troca de Contador -->
+            <form id="TrocaContadorForm" class="space-y-4" onsubmit="validateForm(event)">
+                <div>
+                    <label for="firstname" class="block text-gray-700">Nome*</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="Seu Nome *"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500"
+                        required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-700">WhatsApp*</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Seu WhatsApp *"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500"
+                        required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700">Email*</label>
+                    <input type="email" id="email" name="email" placeholder="Seu Email *"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500"
+                        required>
+                </div>
+                <div>
+                    <label for="company" class="block text-gray-700">Nome da Empresa</label>
+                    <input type="text" id="company" name="company" placeholder="Nome da sua empresa"
+                        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-sky-500">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="comunicacoes" name="comunicacoes" class="mr-2" required>
+                    <label for="comunicacoes" class="text-gray-700">Eu concordo em receber comunicações.</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit"
+                        class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-24 rounded-md shadow-lg transition duration-300">
+                        Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function openModal() {
+            document.getElementById('modalForm').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modalForm').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('modalForm');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        function validateForm(event) {
+            event.preventDefault();
+            const form = document.getElementById('TrocaContadorForm');
+            const nome = form['firstname'].value.trim();
+            const whatsapp = form['phone'].value.trim();
+            const email = form['email'].value.trim();
+            const comunicacoes = form['comunicacoes'].checked;
+
+            if (!nome || !whatsapp || !email || !comunicacoes) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+            if (!phoneRegex.test(whatsapp)) {
+                alert('Por favor, insira um número de WhatsApp válido.');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor, insira um email válido.');
+                return;
+            }
+
+            form.submit();
+        }
+
+        $(document).ready(function () {
+            $('#phone').inputmask('(99) 99999-9999');
+        });
+    </script>
+
+    <!-- Seção de Depoimentos com Carrossel -->
+    <section id="testimonials" class="bg-white py-12">
+        <div class="reveal-scale mx-auto px-4 py-8">
+            <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Depoimentos sobre nosso Serviço de Troca de
+                Contador</h2>
+            <div class="swiper testimonialSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Depoimento 1 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"A troca de contador com a AOB Contábil foi muito tranquila e
+                                nossa empresa agora está em boas mãos."</p>
+                            <p class="font-semibold text-gray-800">- Ana Souza</p>
+                        </div>
+                    </div>
+                    <!-- Depoimento 2 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"Recomendo a troca de contador com a AOB Contábil. O processo
+                                foi rápido e eficiente."</p>
+                            <p class="font-semibold text-gray-800">- Ricardo Oliveira</p>
+                        </div>
+                    </div>
+                    <!-- Depoimento 3 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"A AOB Contábil facilitou a troca de contador e agora temos um
+                                atendimento contábil excelente."</p>
+                            <p class="font-semibold text-gray-800">- Fabiana Costa</p>
+                        </div>
+                    </div>
+                    <!-- Depoimento 4 -->
+                    <div class="swiper-slide bg-white p-6 rounded-lg shadow">
+                        <div class="testimonial-card">
+                            <p class="text-gray-600 mb-4">"Graças à AOB Contábil, trocamos de contador sem complicações
+                                e com muita segurança."</p>
+                            <p class="font-semibold text-gray-800">- Rafael Santos</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Adicionando paginador -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+    <script>
+        var testimonialSwiper = new Swiper('.testimonialSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+            }
+        });
+
+        const slides = document.querySelectorAll('.swiper-slide');
+        slides.forEach(slide => {
+            slide.addEventListener('mouseenter', () => {
+                testimonialSwiper.autoplay.stop();
+            });
+            slide.addEventListener('mouseleave', () => {
+                testimonialSwiper.autoplay.start();
+            });
+        });
+    </script>
+
+    <!-- Seção de Chamada para Ação -->
+    <section class="bg-gray-100 py-12 shadow-lg">
+        <div class="max-w-screen-xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-sky-600 mb-8">Pronto para Trocar de Contador?</h2>
+            <p class="text-lg text-gray-600 mb-8">Entre em contato conosco hoje mesmo para saber mais sobre como podemos
+                facilitar a troca de contador para sua empresa.</p>
+            <a href="#" onclick="openModal()"
+                class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 px-24 rounded-md shadow-lg transition duration-300">
+                Trocar de Contador
+            </a>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Navbar Fixa no Rodapé -->
+    <footer id="navbarfooter" class="fixed bottom-0 w-full bg-white border-t border-gray-200 py-4 px-4 hidden z-50">
+        <nav
+            class="container mx-auto flex flex-col sm:flex-row justify-center sm:justify-center items-center text-center sm:text-left">
+            <div class="flex flex-col sm:flex-row items-center mb-4 sm:mb-0 sm:mr-4">
+                <p class="text-black mb-2 sm:mb-0 sm:mr-3"><span class="font-semibold">Dúvidas?</span></p>
+                <a href="https://api.whatsapp.com/send?phone=551123394043" target="_blank"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300">
+                    Entre em contato
+                </a>
+            </div>
+            <div class="hidden lg:flex flex-col sm:flex-row items-center">
+                <p class="text-black mb-2 sm:mb-0 sm:mr-3">Ou se preferir</p>
+                <a href="#" target="_blank"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300">
+                    Ligamos para você
+                </a>
+            </div>
+        </nav>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.getElementById('navbarfooter');
+            const homeSection = document.getElementById('testimonials');
+            const footer = document.getElementById('footer');
+            const homeSectionHeight = homeSection.offsetTop + homeSection.offsetHeight;
+            const footerTop = footer.offsetTop;
+
+            function checkScroll() {
+                const scrolled = window.scrollY + window.innerHeight;
+                if (scrolled > homeSectionHeight || scrolled > footerTop) {
+                    navbar.classList.remove('hidden');
+                } else {
+                    navbar.classList.add('hidden');
+                }
+            }
+            window.addEventListener('scroll', checkScroll);
+        });
+
+        // Script para o FAQ
+        document.addEventListener('DOMContentLoaded', function () {
+            const questions = document.querySelectorAll('.question');
+            const answers = document.querySelectorAll('.answer');
+
+            questions.forEach((question, index) => {
+                question.addEventListener('click', () => {
+                    answers.forEach((answer, i) => {
+                        if (i !== index) {
+                            answer.classList.add('hidden');
+                        }
+                    });
+                    const answer = question.nextElementSibling;
+                    answer.classList.toggle('hidden');
+                });
+            });
+        });
+
+        // Script para animações de revelação
+        ScrollReveal().reveal('.reveal', {
+            origin: 'bottom',
+            distance: '50px',
+            duration: 2000,
+            delay: 300,
+            easing: 'ease',
+        });
+
+        ScrollReveal().reveal('.reveal-scale', {
+            scale: 0.85,
+            duration: 2000,
+            delay: 300,
+            easing: 'ease',
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer id="footer"
+        class="relative sm:mb-12 mb-24 text-sky-600 py-8 bg-gradient-to-b from-white via-gray-100 to-gray-200">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div
+                class="reveal relative container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-start md:items-start gap-10 px-4 z-10">
+                <div>
+                    <a href="#" class="text-2xl font-bold">
+                        <img src="/abertura-de-empresa/logobg.png" alt="Logo da AOB Contábil"
+                            class="w-64 md:-mt-4 md:-ml-6 mx-auto">
+                    </a>
+                    <h3 class="text-xl font-semibold mt-2 mb-2 text-sky-600">AOB Contabilidade</h3>
+                    <p class="mb-2 text-black">CNPJ: 25.344.574/0001-08</p>
+                    <p class="mb-2 text-black">Marca registrada | Processo nº: 910926310/2018</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600">Contato</h4>
+                    <p class="text-black">Rua Barão do Triunfo - 427 - Conjunto 1301, Brooklin,<br> São Paulo - SP,
+                        04602-001</p>
+                    <p class="text-black">(11) 2339-4043<i class="fab fa-whatsapp text-lg ml-1 text-green-600"></i></p>
+                    <p class="text-black">contato@aobcontabil.com.br</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600 mt-0 lg:mt-0">Links Rápidos</h4>
+                    <ul class="text-black">
+                        <li class="mb-2 hover:text-sky-600"><a href="#home">Início</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#services">Serviços</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#sobre">Sobre</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="/blog">Blog</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600">Redes Sociais</h4>
+                    <ul class="text-black">
+                        <li>
+                            <a href="https://www.instagram.com/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram text-2xl mr-2 text-red-900"></i>Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-facebook text-2xl mr-2 text-blue-900"></i>Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com.br/@aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-youtube text-2xl -ml-0 mr-2 text-red-500"></i>Youtube
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/company/aob-contabilidade"
+                                class="flex mb-2 hover:text-sky-600" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-linkedin text-2xl mr-2 text-gray-900"></i>LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.x.com.br/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-x-twitter text-2xl -ml-0 mr-2 text-black"></i>Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FontAwesome para os ícones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</body>
+
+</html>
