@@ -4,140 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - AOB Contábil</title>
+    <title>AOB Contábil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <style>
-        /* Estilo customizado */
-        .post-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-            background-color: white;
-            margin-bottom: 20px;
-        }
-
-        .post-card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .post-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .navbar {
-            transition: all 0.3s ease-in-out;
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="bg-gray-200">
-    <!-- Navbar -->
-    <header class="fixed top-0 w-full z-50 bg-white navbar">
-        <nav class="max-w-screen-xl container mx-auto flex justify-between items-center p-4">
-            <div class="flex items-center">
-                <a href="#" class="text-2xl font-bold text-black">
-                    <img src="/imgs/logobg.png" alt="Logo" class="h-16">
-                </a>
-            </div>
-            <div class="hidden md:flex space-x-8 relative">
-                <a href="#" class="text-gray-900 hover:text-sky-600 font-semibold">Início</a>
-                <a href="#services" class="text-gray-900 hover:text-sky-600 font-semibold">Serviços</a>
-                <a href="#sobre" class="text-gray-900 hover:text-sky-600 font-semibold">Sobre</a>
-                <a href="#blog" class="text-gray-900 hover:text-sky-600 font-semibold">Blog</a>
-                <a href="#contato" class="text-gray-900 hover:text-sky-600 font-semibold">Contato</a>
-            </div>
-            <div class="hidden md:block">
-                <a href="https://onvio.com.br/br-portal-do-cliente/" target="_blank"
-                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300 mr-4">Portal
-                    do Cliente</a>
-            </div>
-            <button class="block md:hidden focus:outline-none" id="menu-button">
-                <svg class="w-6 h-6 text-black hover:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                    </path>
-                </svg>
-            </button>
-        </nav>
-        <div class="hidden md:hidden bg-white bg-opacity-75" id="menu">
-            <a href="#home" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Início</a>
-            <a href="#services" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Serviços</a>
-            <a href="#sobre" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Sobre</a>
-            <a href="#blog" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Blog</a>
-            <a href="#contato" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Contato</a>
-            <a href="https://onvio.com.br/br-portal-do-cliente/" target="_blank"
-                class="block bg-sky-600 text-white text-center px-4 py-2 rounded-md shadow hover:bg-sky-700">Portal do
-                Cliente</a>
-        </div>
-    </header>
+<body class="bg-white">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuButton = document.getElementById('menu-button');
-            const menu = document.getElementById('menu');
-            menuButton.addEventListener('click', function () {
-                menu.classList.toggle('active');
-            });
-        });
-    </script>
-
-    <!-- Seção Blog -->
+    <!-- Seção de Destaques do Blog -->
     <section id="blog" class="bg-gray-100 py-16">
         <div class="reveal-scale max-w-screen-xl mx-auto px-4">
             <h2 class="text-4xl font-bold text-center text-sky-600 mb-8">Destaques do Blog</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="post-card">
-                    <img src="https://via.placeholder.com/200" alt="Post 1">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Como Gerenciar Suas Finanças em 2024</h3>
-                    <p class="text-gray-600">Descubra dicas práticas para organizar suas finanças pessoais e
-                        empresariais.</p>
-                    <a href="https://example.com/post1" class="text-sky-600 font-semibold hover:underline mt-auto">Leia
-                        mais</a>
-                </div>
-                <div class="post-card">
-                    <img src="https://via.placeholder.com/200" alt="Post 2">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Benefícios da Contabilidade Digital</h3>
-                    <p class="text-gray-600">Veja como a contabilidade digital pode transformar sua empresa.</p>
-                    <a href="https://example.com/post2" class="text-sky-600 font-semibold hover:underline mt-auto">Leia
-                        mais</a>
-                </div>
-                <div class="post-card">
-                    <img src="https://via.placeholder.com/200" alt="Post 3">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Dicas para Impulsionar seu Negócio</h3>
-                    <p class="text-gray-600">Aprenda estratégias eficazes para aumentar suas vendas e expandir seu
-                        negócio.</p>
-                    <a href="https://example.com/post3" class="text-sky-600 font-semibold hover:underline mt-auto">Leia
-                        mais</a>
-                </div>
-                <div class="post-card">
-                    <img src="https://via.placeholder.com/200" alt="Post 4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Os Desafios da Gestão Empresarial</h3>
-                    <p class="text-gray-600">Entenda os principais desafios e como superá-los com sucesso.</p>
-                    <a href="https://example.com/post4" class="text-sky-600 font-semibold hover:underline mt-auto">Leia
-                        mais</a>
-                </div>
-                <!-- Adicione mais postagens conforme necessário -->
+            <div id="blog-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Posts do Blog serão inseridos aqui -->
             </div>
         </div>
     </section>
+
+    <script>
+        async function fetchPosts() {
+            try {
+                const response = await fetch('http://localhost:1337/api/blog-posts');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const posts = await response.json();
+                console.log(posts); // Verifique os dados recebidos
+                return posts.data;
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+                return [];
+            }
+        }
+
+        function createPostElement(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'bg-white rounded-lg shadow-lg p-6';
+            postElement.innerHTML = `
+                <img src="http://localhost:1337${post.attributes.image.data.attributes.url}" alt="${post.attributes.title}" class="h-48 w-full object-cover mb-4">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">${post.attributes.title}</h3>
+                <p class="text-gray-600">${post.attributes.summary}</p>
+                <a href="post.html?id=${post.id}" class="text-sky-600 font-semibold hover:underline mt-auto">Leia Mais</a>
+            `;
+            return postElement;
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const posts = await fetchPosts();
+            const blogContainer = document.getElementById('blog-container');
+            if (posts.length === 0) {
+                blogContainer.innerHTML = '<p>No blog posts found.</p>';
+            } else {
+                posts.forEach(post => {
+                    const postElement = createPostElement(post);
+                    blogContainer.appendChild(postElement);
+                });
+            }
+        });
+    </script>
+
 </body>
 
 </html>
