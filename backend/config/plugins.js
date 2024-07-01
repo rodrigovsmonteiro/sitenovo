@@ -5,16 +5,14 @@ module.exports = ({ env }) => ({
     defaultLocale: 'pt-BR',
   },
   // Configurações de autenticação e segurança
-  auth: {
+  'admin-auth': {
     secret: env('ADMIN_JWT_SECRET'),
   },
-  apiToken: {
+  'api-token': {
     salt: env('API_TOKEN_SALT'),
   },
-  transfer: {
-    token: {
-      salt: env('TRANSFER_TOKEN_SALT'),
-    },
+  'transfer-token': {
+    salt: env('TRANSFER_TOKEN_SALT'),
   },
   flags: {
     nps: env.bool('FLAG_NPS', true),
