@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Navbar Fixa e Transparente -->
+    <header class="fixed top-0 w-full z-50 bg-white navbar">
+        <nav class="max-w-screen-xl container mx-auto flex justify-between items-center p-4">
+            <div class="flex items-center">
+                <a href="#" class="text-2xl font-bold text-black">
+                    <img src="/imgs/logobg.png" alt="Logo" class="h-16">
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8 relative">
+                <!-- Links para as seções da página -->
+                <a href="#artigos-populares" class="text-gray-900 hover:text-sky-600 font-semibold">Mais Acessados</a>
+                <div class="relative group">
+                    <button id="categories-button"
+                        class="text-gray-900 hover:text-sky-600 font-semibold flex items-center">
+                        Categorias
+                        <svg id="dropdown-icon" class="ml-2 w-4 h-4 transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="categories-dropdown"
+                        class="absolute hidden group-hover:block bg-white shadow-lg mt-0 rounded-md py-2"
+                        style="min-width: 200px;">
+                        <a href="#categoria1"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Categoria 1</a>
+                        <a href="#categoria2"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Categoria 2</a>
+                        <a href="#categoria3"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Categoria 3</a>
+                        <a href="#categoria4"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Categoria 4</a>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <button id="tools-button" class="text-gray-900 hover:text-sky-600 font-semibold flex items-center">
+                        Ferramentas
+                        <svg id="tools-dropdown-icon" class="ml-2 w-4 h-4 transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="tools-dropdown"
+                        class="absolute hidden group-hover:block bg-white shadow-lg mt-0 rounded-md py-2"
+                        style="min-width: 200px;">
+                        <a href="#ferramenta1"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Ferramenta 1</a>
+                        <a href="#ferramenta2"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Ferramenta 2</a>
+                        <a href="#ferramenta3"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Ferramenta 3</a>
+                        <a href="#ferramenta4"
+                            class="block px-4 py-2 text-gray-900 hover:text-sky-600 hover:bg-gray-100">Ferramenta 4</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <a href="https://onvio.com.br/br-portal-do-cliente/" target="_blank"
+                    class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-md shadow-lg transition duration-300 mr-4">
+                    Site
+                </a>
+            </div>
+            <button class="block md:hidden focus:outline-none" id="menu-button">
+                <svg class="w-6 h-6 text-black hover:text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+        <div class="hidden md:hidden bg-white bg-opacity-75" id="menu">
+            <a href="https://www.seusite.com" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Site</a>
+            <a href="#artigos-populares" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Artigos Populares</a>
+            <a href="#categoria1" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Categoria 1</a>
+            <a href="#categoria2" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Categoria 2</a>
+            <a href="#categoria3" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Categoria 3</a>
+            <a href="#categoria4" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Categoria 4</a>
+            <a href="#ferramenta1" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Ferramenta 1</a>
+            <a href="#ferramenta2" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Ferramenta 2</a>
+            <a href="#ferramenta3" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Ferramenta 3</a>
+            <a href="#ferramenta4" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Ferramenta 4</a>
+            <a href="#sobre-autores" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Sobre os Autores</a>
+            <a href="#contato" class="block text-gray-900 hover:text-sky-600 px-4 py-2">Contato</a>
+            <a href="https://onvio.com.br/br-portal-do-cliente/" target="_blank"
+                class="block bg-sky-600 text-white text-center px-4 py-2 rounded-md shadow hover:bg-sky-700">Site</a>
+        </div>
+    </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const servicesButton = document.getElementById('services-button');
+            const dropdownIcon = document.getElementById('dropdown-icon');
+            const servicesDropdown = document.getElementById('services-dropdown');
+            servicesButton.addEventListener('click', function (e) {
+                e.preventDefault();
+                servicesDropdown.classList.toggle('hidden');
+                dropdownIcon.classList.toggle('rotate-180');
+            });
+            document.addEventListener('click', function (e) {
+                if (!servicesButton.contains(e.target) && !servicesDropdown.contains(e.target)) {
+                    servicesDropdown.classList.add('hidden');
+                    dropdownIcon.classList.remove('rotate-180');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            const menuButton = document.getElementById('menu-button');
+            const menu = document.getElementById('menu');
+            menuButton.addEventListener('click', function () {
+                menu.classList.toggle('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            const menuButton = document.getElementById('menu-button');
+            const menu = document.getElementById('menu');
+            menuButton.addEventListener('click', function () {
+                menu.classList.toggle('active');
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <!-- Stories Section -->
+    <section class="max-w-screen-xl container mx-auto px-6 py-8 pt-28">
+        <h2 class=" text-3xl font-bold mb-6">Últimas 24 Horas</h2>
+        <div class="flex space-x-4 overflow-x-auto">
+            <!-- Story 1 -->
+            <div class="bg-white rounded-full overflow-hidden w-24 h-24 flex-none">
+                <img src="https://via.placeholder.com/96x96" alt="Notícia 1" class="w-full h-full object-cover">
+            </div>
+            <!-- Repeat for more stories -->
+        </div>
+    </section>
+
+    <!-- Featured Articles Section -->
+    <section class="max-w-screen-xl container mx-auto px-6 py-8">
+        <h2 class="text-3xl font-bold mb-6">Artigos em Destaque</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Article 1 -->
+            <article class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x200" alt="Artigo 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Título do Artigo 1</h3>
+                    <p class="text-gray-700">Resumo do artigo 1...</p>
+                    <p class="text-sm text-gray-600 mt-4">Por <span class="font-semibold">Autor 1</span> em
+                        01/07/2024
+                    </p>
+                    <div class="mt-4">
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag1</span>
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag2</span>
+                    </div>
+                </div>
+            </article>
+            <!-- Repeat for more articles -->
+        </div>
+    </section>
+
+    <!-- Most Accessed Section -->
+    <section class="max-w-screen-xl container mx-auto px-6 py-8">
+        <h2 class="text-3xl font-bold mb-6">Mais Acessados</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Most Accessed Article 1 -->
+            <article class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x200" alt="Artigo Mais Acessado 1"
+                    class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Título do Artigo Mais Acessado 1</h3>
+                    <p class="text-gray-700">Resumo do artigo mais acessado 1...</p>
+                    <p class="text-sm text-gray-600 mt-4">Por <span class="font-semibold">Autor 2</span> em
+                        30/06/2024
+                    </p>
+                    <div class="mt-4">
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag1</span>
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag2</span>
+                    </div>
+                </div>
+            </article>
+            <!-- Repeat for more articles -->
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="max-w-screen-xl container mx-auto px-6 py-8">
+        <h2 class="text-3xl font-bold mb-6">Categorias</h2>
+        <div class="flex flex-wrap gap-4">
+            <!-- Category 1 -->
+            <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Categoria 1</a>
+            <!-- Repeat for more categories -->
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="max-w-screen-xl container mx-auto px-6 py-8">
+        <h2 class="text-3xl font-bold mb-6">Últimas Notícias e Artigos</h2>
+        <div class="space-y-6">
+            <!-- News Card 1 -->
+            <article class="bg-white shadow-lg rounded-lg overflow-hidden flex">
+                <img src="https://via.placeholder.com/200x200" alt="Notícia 1" class="w-46 h-46 object-cover flex-none">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-xl font-bold mb-2">Título da Notícia 1</h3>
+                    <p class="text-gray-700">Resumo da notícia 1...</p>
+                    <p class="text-sm text-gray-600 mt-4">Por <span class="font-semibold">Autor 3</span> em
+                        29/06/2024
+                    </p>
+                    <div class="mt-4">
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag1</span>
+                        <span
+                            class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag2</span>
+                    </div>
+                </div>
+            </article>
+            <!-- Repeat for more news cards -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="relative text-sky-600 py-8 bg-gradient-to-b from-white via-gray-100 to-gray-200">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div
+                class="reveal relative container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-start md:items-start gap-10 px-4 z-10">
+                <div>
+                    <a href="#" class="text-2xl font-bold">
+                        <img src="/abertura-de-empresa/logobg.png" alt="Logo da AOB Contábil"
+                            class="w-64 md:-mt-4 md:-ml-6 mx-auto">
+                    </a>
+                    <h3 class="text-xl font-semibold mt-2 mb-2 text-sky-600">AOB Contabilidade</h3>
+                    <p class="mb-2 text-black">CNPJ: 25.344.574/0001-08</p>
+                    <p class="mb-2 text-black">Marca registrada | Processo nº: 910926310/2018</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600">Contato</h4>
+                    <p class="text-black">Rua Barão do Triunfo - 427 - Conjunto 1301, Brooklin,<br> São Paulo - SP,
+                        04602-001</p>
+                    <p class="text-black">(11) 2339-4043<i class="fab fa-whatsapp text-lg ml-1 text-green-600"></i>
+                    </p>
+                    <p class="text-black">contato@aobcontabil.com.br</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600 mt-0 lg:mt-0">Links Rápidos</h4>
+                    <ul class="text-black">
+                        <li class="mb-2 hover:text-sky-600"><a href="https://www.seusite.com">Site</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#sobre">Sobre</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="/blog">Blog</a></li>
+                        <li class="mb-2 hover:text-sky-600"><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2 text-sky-600">Redes Sociais</h4>
+                    <ul class="text-black">
+                        <li>
+                            <a href="https://www.instagram.com/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram text-2xl mr-2 text-red-900"></i>Instagram
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-facebook text-2xl mr-2 text-blue-900"></i>Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com.br/@aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-youtube text-2xl -ml-0 mr-2 text-red-500"></i>Youtube
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/company/aob-contabilidade"
+                                class="flex mb-2 hover:text-sky-600" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-linkedin text-2xl mr-2 text-gray-900"></i>LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.x.com.br/aobcontabil" class="flex mb-2 hover:text-sky-600"
+                                target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-x-twitter text-2xl -ml-0 mr-2 text-black"></i>Twitter
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
